@@ -5,11 +5,5 @@
     "AUTH_GOOGLE_SECRET": "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",
     "AUTH_SECRET": "mS3wLpWJ0v+EiuaZeFCIOFVqycT2rRVO4egfLMgwvwg=",
     "NEXTAUTH_URL": "https://zettabyte-jt3l.vercel.app"
-  },
-  "routes": [
-    {
-      "src": "/api/auth/(.*)",
-      "dest": "/api/auth/$1"
-    }
-  ]
+  }
 }
