@@ -1,4 +1,7 @@
 "use client";
+
+import { Suspense, useEffect, useMemo, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 import useFetch from "@/hooks/useFetch";
 import { staggerParent, riseIn } from "@/lib/motion";
@@ -7,16 +10,24 @@ import { ErrorState } from "@/components/States";
 import Button from "@/components/Button";
 import PostCard, { Post } from "@/components/PostCard";
 import useTitle from "@/hooks/useTitle";
-import { useEffect, useMemo, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+
+export const dynamic = "force-dynamic"; // avoid prerender CSR bailout on Vercel
 
 const LIMIT = 12;
 
 export default function PostsPage() {
   useTitle("zettabyte | Posts");
+  return (
+    <Suspense fallback={<CardSkeletonGrid count={LIMIT} />}>
+      <PostsPageInner />
+    </Suspense>
+  );
+}
 
+function PostsPageInner() {
   const search = useSearchParams();
   const router = useRouter();
+
   const startPage = Math.max(1, Number(search.get("page") || 1));
   const [page, setPage] = useState(startPage);
 
@@ -36,7 +47,7 @@ export default function PostsPage() {
     (async () => {
       try {
         const r = await fetch(
-          `https://jsonplaceholder.typicode.com/posts?_page=1&_limit=1`,
+          "https://jsonplaceholder.typicode.com/posts?_page=1&_limit=1",
           { cache: "no-store" }
         );
         const header = r.headers.get("x-total-count");
@@ -44,7 +55,7 @@ export default function PostsPage() {
           setTotalCount(Number(header));
           return;
         }
-        const all = await fetch(`https://jsonplaceholder.typicode.com/posts`, {
+        const all = await fetch("https://jsonplaceholder.typicode.com/posts", {
           cache: "no-store",
         }).then((x) => x.json());
         if (!cancelled) setTotalCount(Array.isArray(all) ? all.length : 0);
