@@ -11,7 +11,7 @@ import Button from "@/components/Button";
 import PostCard, { Post } from "@/components/PostCard";
 import useTitle from "@/hooks/useTitle";
 
-export const dynamic = "force-dynamic"; // avoid prerender CSR bailout on Vercel
+export const dynamic = "force-dynamic"; 
 
 const LIMIT = 12;
 

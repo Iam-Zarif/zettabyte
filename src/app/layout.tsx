@@ -1,5 +1,6 @@
 import "./globals.css";
 import Link from "next/link";
+import Providers from "@/components/Providers";
 
 export default function RootLayout({
   children,
@@ -14,13 +15,16 @@ export default function RootLayout({
             <Link href="/" className="font-semibold">
               Zettabyte
             </Link>
-            <div className="text-sm flex gap-4">
+            <div className="flex gap-4 text-sm">
               <Link href="/posts">Posts</Link>
               <Link href="/users">Users</Link>
+              <Link href="/profile">Profile</Link>
             </div>
           </nav>
         </header>
-        <main className="mx-auto max-w-5xl px-4 py-8">{children}</main>
+        <main className="mx-auto max-w-5xl px-4 py-8">
+          <Providers>{children}</Providers>
+        </main>
       </body>
     </html>
   );
