@@ -1,103 +1,169 @@
-import Image from "next/image";
+"use client";
+import { motion, useReducedMotion } from "framer-motion";
+import useDashboard from "@/hooks/useDashboard";
+import Button from "@/components/Button";
+import { ErrorState } from "@/components/States";
+import Link from "next/link";
+import useTitle from "@/hooks/useTitle";
 
-export default function Home() {
+function Spinner() {
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <svg
+      viewBox="0 0 24 24"
+      className="h-4 w-4 animate-spin"
+      aria-hidden="true"
+    >
+      <circle
+        cx="12"
+        cy="12"
+        r="10"
+        stroke="currentColor"
+        strokeWidth="4"
+        fill="none"
+        opacity=".25"
+      />
+      <path
+        d="M22 12a10 10 0 0 1-10 10"
+        stroke="currentColor"
+        strokeWidth="4"
+        fill="none"
+      />
+    </svg>
+  );
+}
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+export default function Page() {
+  useTitle("zettabyte | Home");
+  const reduce = useReducedMotion();
+  const { loading, refreshing, error, metrics, chart, refetch, refreshKey } =
+    useDashboard();
+  if (error)
+    return (
+      <div className="space-y-6">
+        <h1 className="text-2xl font-semibold">Dashboard</h1>
+        <ErrorState message={error} onRetry={refetch} />
+      </div>
+    );
+  const isLoading = loading || refreshing;
+  return (
+    <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <h1 className="text-2xl font-semibold">Dashboard</h1>
+        <Button
+          variant="subtle"
+          onClick={refetch}
+          disabled={refreshing}
+          aria-busy={refreshing}
+          className={
+            refreshing ? "cursor-not-allowed opacity-60" : "cursor-pointer"
+          }
+        >
+          {refreshing ? (
+            <span className="flex items-center gap-2">
+              <Spinner /> Refreshing
+            </span>
+          ) : (
+            "Refresh"
+          )}
+        </Button>
+      </div>
+
+      {isLoading ? (
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+          {Array.from({ length: 3 }).map((_, i) => (
+            <div key={i} className="rounded-2xl border border-neutral-800 p-5">
+              <div className="skel h-4 w-24 rounded" />
+              <div className="mt-3 skel h-7 w-28 rounded" />
+            </div>
+          ))}
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      ) : (
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+          <Link
+            href="/users"
+            prefetch
+            aria-label="Go to Users"
+            className="rounded-2xl border border-neutral-800 p-5 outline-none transition hover:border-neutral-700 hover:bg-neutral-900 focus-visible:ring-2 focus-visible:ring-neutral-300/30"
+          >
+            <div className="text-sm text-neutral-400">Users</div>
+            <div className="mt-2 text-2xl font-semibold">
+              {metrics.totalUsers}
+            </div>
+          </Link>
+          <Link
+            href="/posts"
+            prefetch
+            aria-label="Go to Posts"
+            className="rounded-2xl border border-neutral-800 p-5 outline-none transition hover:border-neutral-700 hover:bg-neutral-900 focus-visible:ring-2 focus-visible:ring-neutral-300/30"
+          >
+            <div className="text-sm text-neutral-400">Posts</div>
+            <div className="mt-2 text-2xl font-semibold">
+              {metrics.totalPosts}
+            </div>
+          </Link>
+          <div className="rounded-2xl border border-neutral-800 p-5">
+            <div className="text-sm text-neutral-400">Avg comments/post</div>
+            <div className="mt-2 text-2xl font-semibold">
+              {metrics.avgCommentsPerPost}
+            </div>
+          </div>
+        </div>
+      )}
+
+      <div className="rounded-2xl border border-neutral-800 p-5">
+        <div className="mb-3 flex items-end justify-between">
+          <div className="text-base font-semibold">Posts by top users</div>
+          {!isLoading && (
+            <div className="text-xs text-neutral-400">Top {chart.length}</div>
+          )}
+        </div>
+
+        {isLoading ? (
+          <div className="h-40">
+            <div className="flex h-full items-end gap-2">
+              {Array.from({ length: 10 }).map((_, i) => (
+                <div key={i} className="skel h-8 w-6 rounded" />
+              ))}
+            </div>
+          </div>
+        ) : (
+          <div className="h-40">
+            <div key={refreshKey} className="flex h-full items-end gap-3">
+              {chart.map((row, i) => {
+                const max = chart[0]?.count || 1;
+                const h = Math.round((row.count / max) * 100);
+                return (
+                  <div
+                    key={row.userId}
+                    className="flex h-full w-8 flex-col items-center justify-end gap-2"
+                  >
+                    <motion.div
+                      initial={
+                        reduce ? { opacity: 0 } : { height: 0, opacity: 0 }
+                      }
+                      animate={
+                        reduce
+                          ? { opacity: 1 }
+                          : { height: `${h}%`, opacity: 1 }
+                      }
+                      transition={{
+                        type: "spring",
+                        stiffness: 240,
+                        damping: 20,
+                        delay: i * 0.04,
+                      }}
+                      className="w-full rounded bg-neutral-300/25"
+                    />
+                    <div className="w-12 truncate text-center text-[10px] text-neutral-400">
+                      {row.name.split(" ")[0]}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
