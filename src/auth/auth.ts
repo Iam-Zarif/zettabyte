@@ -9,10 +9,10 @@ export const authConfig: NextAuthOptions = {
       clientSecret: process.env.AUTH_GOOGLE_SECRET!,
     }),
   ],
-  session: { strategy: "jwt" }, // This is now correctly typed as "jwt"
+  session: { strategy: "jwt" },
   secret: process.env.AUTH_SECRET!,
 };
 
 const authHandler = NextAuth(authConfig);
 
-export default authHandler; // Use this in your API route
+export default authHandler;

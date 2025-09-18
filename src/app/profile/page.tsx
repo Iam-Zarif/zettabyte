@@ -1,5 +1,5 @@
 "use client";
-import { useSession, signIn } from "next-auth/react";
+import { useSession, signIn, signOut } from "next-auth/react";
 import useTitle from "@/hooks/useTitle";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -56,6 +56,12 @@ export default function ProfilePage() {
               </div>
             </div>
           </div>
+          <button
+            onClick={() => signOut({ callbackUrl: "/" })}
+            className="mt-4 rounded-md border border-neutral-800 px-4 py-2 text-sm hover:bg-neutral-900"
+          >
+            Log out
+          </button>
         </div>
       </div>
     );
