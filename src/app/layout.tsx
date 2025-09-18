@@ -2,7 +2,6 @@ import "./globals.css";
 import Link from "next/link";
 import Providers from "@/components/Providers";
 
-
 export default function RootLayout({
   children,
 }: {
