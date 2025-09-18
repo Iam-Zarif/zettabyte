@@ -26,6 +26,7 @@ export default function RootLayout({
           property="og:image"
           content="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZ7P-iNiO6vphZygOeeAzqsXiqz4H3VrJfAw&s"
         />
+
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Zettabyte - Dashboard" />
         <meta
@@ -36,7 +37,11 @@ export default function RootLayout({
           name="twitter:image"
           content="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZ7P-iNiO6vphZygOeeAzqsXiqz4H3VrJfAw&s"
         />
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@yourtwitterhandle" />
       </head>
+
       <body
         className="min-h-dvh bg-neutral-950 text-neutral-100"
         cz-shortcut-listen="true"

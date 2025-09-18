@@ -110,7 +110,7 @@ export default function Page() {
         </div>
       )}
 
-      <div className="rounded-2xl border border-neutral-800 p-5">
+      <div className="rounded-2xl border border-neutral-800 p-5 max-w-md mx-auto">
         <div className="mb-3 flex items-end justify-between">
           <div className="text-base font-semibold">Posts by top users</div>
           {!isLoading && (
@@ -127,40 +127,19 @@ export default function Page() {
             </div>
           </div>
         ) : (
-          <div className="h-40">
-            <div key={refreshKey} className="flex h-full items-end gap-3">
-              {chart.map((row, i) => {
-                const max = chart[0]?.count || 1;
-                const h = Math.round((row.count / max) * 100);
-                return (
-                  <div
-                    key={row.userId}
-                    className="flex h-full w-8 flex-col items-center justify-end gap-2"
-                  >
-                    <motion.div
-                      initial={
-                        reduce ? { opacity: 0 } : { height: 0, opacity: 0 }
-                      }
-                      animate={
-                        reduce
-                          ? { opacity: 1 }
-                          : { height: `${h}%`, opacity: 1 }
-                      }
-                      transition={{
-                        type: "spring",
-                        stiffness: 240,
-                        damping: 20,
-                        delay: i * 0.04,
-                      }}
-                      className="w-full rounded bg-neutral-300/25"
-                    />
-                    <div className="w-12 truncate text-center text-[10px] text-neutral-400">
-                      {row.name.split(" ")[0]}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
+          <div className="space-y-4">
+            {chart.map((row, i) => (
+              <div
+                key={row.userId}
+                className="flex items-center justify-between gap-3"
+              >
+                <div className="text-xl font-semibold">{i + 1}.</div>
+                <div className="flex-1 text-sm text-neutral-400">
+                  {row.name}
+                </div>
+                <div className="text-sm font-semibold">{row.count} Posts</div>
+              </div>
+            ))}
           </div>
         )}
       </div>

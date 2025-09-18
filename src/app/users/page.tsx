@@ -17,7 +17,7 @@ type User = {
 };
 
 export default function UsersPage() {
-    useTitle("zettabyte | Users");
+  useTitle("zettabyte | Users");
 
   const { data, loading, error, refetch } = useFetch<User[]>(
     "https://jsonplaceholder.typicode.com/users",
@@ -25,6 +25,7 @@ export default function UsersPage() {
   );
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState<User | null>(null);
+
   if (loading)
     return (
       <div className="overflow-x-auto rounded-2xl border border-neutral-800">
@@ -43,15 +44,16 @@ export default function UsersPage() {
   if (error) return <ErrorState message={error} onRetry={refetch} />;
   if (!data?.length)
     return <ErrorState message="No users found" onRetry={refetch} />;
+
   return (
     <>
       <div className="overflow-x-auto rounded-2xl border border-neutral-800">
-        <table className="w-full min-w-[640px] text-left text-sm">
+        <table className="min-w-full text-left text-sm">
           <thead className="bg-neutral-900">
             <tr>
               <th className="px-4 py-3">Name</th>
               <th className="px-4 py-3">Email</th>
-              <th className="px-4 py-3">Company</th>
+              <th className="px-4 py-3 hidden sm:table-cell">Company</th>
             </tr>
           </thead>
           <tbody>
@@ -66,7 +68,9 @@ export default function UsersPage() {
               >
                 <td className="px-4 py-3">{u.name}</td>
                 <td className="px-4 py-3">{u.email}</td>
-                <td className="px-4 py-3">{u.company?.name}</td>
+                <td className="px-4 py-3 hidden sm:table-cell">
+                  {u.company?.name}
+                </td>
               </tr>
             ))}
           </tbody>
