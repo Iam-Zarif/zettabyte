@@ -9,6 +9,34 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <link
+          rel="icon"
+          href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZ7P-iNiO6vphZygOeeAzqsXiqz4H3VrJfAw&s"
+          type="image/png"
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://zettabyte-dusky.vercel.app/" />
+        <meta property="og:title" content="Zettabyte - Dashboard" />
+        <meta
+          property="og:description"
+          content="Zettabyte is a dashboard that allows you to manage posts, users, and profile data."
+        />
+        <meta
+          property="og:image"
+          content="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZ7P-iNiO6vphZygOeeAzqsXiqz4H3VrJfAw&s"
+        />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Zettabyte - Dashboard" />
+        <meta
+          name="twitter:description"
+          content="Zettabyte is a dashboard that allows you to manage posts, users, and profile data."
+        />
+        <meta
+          name="twitter:image"
+          content="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZ7P-iNiO6vphZygOeeAzqsXiqz4H3VrJfAw&s"
+        />
+      </head>
       <body
         className="min-h-dvh bg-neutral-950 text-neutral-100"
         cz-shortcut-listen="true"

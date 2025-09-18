@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
+    "homepage":"https://zettabyte-dusky.vercel.app",
     "start": "next start",
     "lint": "eslint"
   },
