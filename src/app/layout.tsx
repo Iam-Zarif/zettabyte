@@ -10,7 +10,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="min-h-dvh bg-neutral-950 text-neutral-100">
+      <body
+        className="min-h-dvh bg-neutral-950 text-neutral-100"
+        cz-shortcut-listen="true"
+      >
         <header className="border-b border-neutral-800">
           <nav className="mx-auto flex max-w-5xl items-center gap-6 px-4 py-3">
             <Link href="/" className="font-semibold">
